@@ -10,6 +10,13 @@ app.get('/', (req,res) => {
 //FOR IO ON
 io.on('connection', (socket)=>{
   console.log('a user connected')
+
+  socket.on('isiTableDeck', (data) => {
+    console.log(data,'ini dari client')
+    //broadcast pesannya
+    //sendALl
+    io.emit('tabledeck', data)
+  })
 })
 
 http.listen(port , () => {
