@@ -37,6 +37,7 @@ let CountDown = setInterval(function(){
     io.sockets.emit('counter', timer);
     io.sockets.emit('dataQuestion', dataQuestion);
     io.sockets.emit('questionLeft', totalQuestion);
+    io.emit('updateDataPlayer', player);
     io.emit('statusGame', isGameStart)
   }
   //jika waktu = 0, maka pertanyaan berganti

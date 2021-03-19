@@ -2,7 +2,7 @@
   <div id="winner">
     <div class="card">
       <div class="card-body">
-        
+
 <div style="width:100%;height:0;padding-bottom:74%;position:relative;"><iframe src="https://giphy.com/embed/3o6fIUZTTDl0IDjbZS" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/congratulations-congrats-3o6fIUZTTDl0IDjbZS"></a></p>
 
       <div class="card-footer">
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style>
