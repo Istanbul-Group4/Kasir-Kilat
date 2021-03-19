@@ -1,32 +1,23 @@
 <template>
-  <!-- <div class="container" style='text-align:center;'>
-    <canvas ref="game" width="1000" height="400" style="border: 1px solid black; background-image:url(https://i.imgur.com/WuJjKMx.jpg);"></canvas>
-      <div class="wrapper">
-        <button v-if="resetGame" v-on:click="reset" class="cta" href="#">
-          <span>Reset Game</span>
-         </button><br>
-         <button v-if="resetGame" v-on:click="logout" class="cta" href="#">
-          <span>Logout</span>
-         </button>
-      </div>
-    <h2 v-if="win">{{winner}}</h2>
-  </div> -->
   <div class="row board">
     <div class="col">
       <div class="playerBox">
         <h3>List Player</h3>
         <hr/>
-        <div v-if="isGameStart===false">
-        </div>
         <Player
           v-for="(player, index) in players"
           :key="index"
           :player="player"
         />
       </div>
-      <form @submit.prevent="startGame()">
-        <button class="btn btn-info" type="submit">start</button>
-      </form>
+      <div v-if="isGameStart===false">
+        <form @submit.prevent="startGame()">
+          <button class="btn btn-primary" type="submit">start</button>
+        </form>
+      </div>
+      <div>
+          <button class="btn btn-warning" type="button" @click.prevent="logout()">leave game</button>
+      </div>
     </div>
     <div class="col boxes">
       <div class="quizbox">
@@ -62,40 +53,33 @@ export default {
   data () {
     return {
       answerBox: '',
-      counter: 0,
-      questionLeft: 0,
-      isGameStart: false,
-      answer: 0,
-      question: '',
-      playerCanAnswer: true
     }
   },
   sockets: {
-    statusGame (status) {
-      this.isGameStart = status
-    },
-    counter (counter) {
-      this.counter = counter
-    },
-    questionLeft (question) {
-      this.questionLeft = question
-    },
-    dataQuestion (dataFromServer) {
-      this.question = dataFromServer.question
-      this.answer = dataFromServer.answer
-    },
-    enableAnswerForm () {
-      this.playerCanAnswer = true
-    },
-    updateDataPlayer (dataPlayer) {
-      this.$store.commit('login', dataPlayer)
-    },
-    kickAllPlayer () {
-      this.$store.commit('kickAllPlayer')
-    },
-    getWinner (winner) {
-      alert(`the winner is ${winner}`)
-    }
+    // statusGame (status) {
+    //   this.$store.commit('statusGame', status)
+    // },
+    // counter (counter) {
+    //   this.$store.commit('counter', counter)
+    // },
+    // questionLeft (question) {
+    //   this.$store.commit('questionLeft', question)
+    // },
+    // dataQuestion (dataFromServer) {
+    //   this.$store.commit('dataQuestion', dataFromServer)
+    // },
+    // enableAnswerForm () {
+    //   this.$store.commit('enableAnswerForm', true)
+    // },
+    // updateDataPlayer (dataPlayer) {
+    //   this.$store.commit('login', dataPlayer)
+    // },
+    // kickAllPlayer () {
+    //   this.$store.commit('kickAllPlayer')
+    // },
+    // getWinner (winner) {
+    //   this.$store.commit('winnerPage', winner)
+    // }
   },
   methods: {
     sendAnswer () {
@@ -105,91 +89,71 @@ export default {
         answer: this.answerBox
       }
       this.$socket.emit('sendAnswer', dataAnswer)
-      this.playerCanAnswer = false
+      this.$store.commit('disableAnswerForm')
       this.answerBox = ''
     },
     startGame () {
       this.$socket.emit('startGame')
+    },
+    refreshPlayer (dataPlayer) {
+      this.$socket.emit('refreshDataPlayer', dataPlayer)
+    },
+    logout() {
+      this.$socket.emit('logout', localStorage.id)
+      this.$store.commit('logout')
+    }
+  },
+  created () {
+    if (localStorage.id) {
+      this.refreshPlayer ()
+    } else {
+      this$.route.push('/')
     }
   },
   computed: {
-    ...mapState(['players'])
+    ...mapState(
+      [
+        'players',
+        'isGameStart',
+        'numberPlayer',
+        'counter',
+        'questionLeft',
+        'answer',
+        'question',
+        'playerCanAnswer'
+      ])
   }
 }
 
 </script>
 
 <style scoped>
-  /* canvas {
-    font-family: "Font Awesome 5 Free";
-    content: "\f005";
-    font-weight: 900;
+  body {
+    background-image: url('https://toppng.com/uploads/preview/transparent-tumblr-math-mathematical-formula-11563015562eyx6q3ujlf.png');
   }
-
-  .wrapper {
-    display: flex;
-    justify-content: center;
-  }
-
-  .cta {
-    display: flex;
-    padding: 10px 45px;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 40px;
-    color: white;
-    background: #6225E6;
-    transition: 1s;
-    box-shadow: 6px 6px 0 black;
-    transform: skewX(-15deg);
-  }
-
-  .cta:focus {
-    outline: none;
-  }
-
-  .cta:hover {
-    transition: 0.5s;
-    box-shadow: 10px 10px 0 #FBC638;
-  }
-
-  .cta span:nth-child(2) {
-      transition: 0.5s;
-      margin-right: 0px;
-  }
-
-  .cta:hover  span:nth-child(2) {
-    transition: 0.5s;
-    margin-right: 45px;
-  }
-
-  span {
-    transform: skewX(15deg);
-  }
-
-  span:nth-child(2) {
-    width: 20px;
-    margin-left: 30px;
-    position: relative;
-    top: 12%;
-  } */
-
   .btn {
     width: 100%;
   }
   .board {
+    background-image: url('https://cdn.pixabay.com/photo/2017/04/05/04/44/background-2203989_960_720.jpg');
+    border-radius: 10px;
     margin: auto;
+    margin-top: 10%;
+    padding: 20px;
+    box-shadow: 0 0 10px 2px #0098a3;
   }
   .quizbox{
     padding: 5px;
     margin: auto;
-    height: 300px;
+    max-height: 300px;
   }
   .playerBox {
     min-height: 300px;
     overflow-y: scroll;
   }
   .boxes{
+    background-image: url('https://thumbs.dreamstime.com/b/vector-abstract-geometric-background-design-element-form-blue-hexagon-vector-abstract-geometric-background-design-element-form-131911559.jpg');
+    border-radius: 10px;
     margin: auto;
     width: 300px;
     background-color: bisque;
@@ -199,3 +163,4 @@ export default {
     padding: 5px;
   }
 </style>
+
