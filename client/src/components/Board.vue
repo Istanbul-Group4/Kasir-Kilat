@@ -22,12 +22,12 @@
     <div class="col boxes">
       <div class="quizbox">
         <!-- isi soal -->
-        <span v-if="isGameStart===true" v-html="question"></span>
+        <span v-if="isGameStart===true" v-html="question"></span> <hr/>
       </div>
       <div class="text-center">
-        <p v-if="isGameStart===true">jawaban : {{answer}}</p>
-        <p v-if="isGameStart===true">{{questionLeft}} question left</p>
-        {{counter}}
+        <!-- <p v-if="isGameStart===true">jawaban : {{answer}}</p> -->
+        <p class="question-counter" v-if="isGameStart===true">{{questionLeft}} question left</p>
+        <p class="question-counter" v-if="isGameStart===true">{{counter}}</p>
       </div>
       <div class="textbox" v-if="playerCanAnswer === true && isGameStart===true">
         <form @submit.prevent="sendAnswer()">
@@ -52,7 +52,7 @@ export default {
   },
   data () {
     return {
-      answerBox: '',
+      answerBox: ''
     }
   },
   sockets: {
@@ -98,16 +98,16 @@ export default {
     refreshPlayer (dataPlayer) {
       this.$socket.emit('refreshDataPlayer', dataPlayer)
     },
-    logout() {
+    logout () {
       this.$socket.emit('logout', localStorage.id)
       this.$store.commit('logout')
     }
   },
   created () {
     if (localStorage.id) {
-      this.refreshPlayer ()
+      this.refreshPlayer()
     } else {
-      this$.route.push('/')
+      this.$route.push('/')
     }
   },
   computed: {
@@ -142,6 +142,9 @@ export default {
     padding: 20px;
     box-shadow: 0 0 10px 2px #0098a3;
   }
+  .question-counter {
+    margin: 5px;
+  }
   .quizbox{
     padding: 5px;
     margin: auto;
@@ -163,4 +166,3 @@ export default {
     padding: 5px;
   }
 </style>
-
