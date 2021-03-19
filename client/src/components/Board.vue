@@ -10,9 +10,7 @@
           <span>Logout</span> 
          </button>
       </div>
-    <p>
     <h2 v-if="win">{{winner}}</h2>
-</p>
 
   </div>
 </template>
@@ -24,8 +22,6 @@ export default {
   name: "Board",
   data() {
     return {
-
-        
       winner: '',
       win: false,
       resetGame: false,
@@ -37,12 +33,8 @@ export default {
   created() {
        
   }, 
-  },
 
   methods: {
-
-      
-    },
     reset() {
       this.win = false;
       this.resetGame = false;
@@ -53,6 +45,7 @@ export default {
       localStorage.clear()
       this.$router.push('/')
     },
+  },
     
 </script>
 
