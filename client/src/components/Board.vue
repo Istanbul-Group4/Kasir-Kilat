@@ -11,6 +11,12 @@
       </div>
     <h2 v-if="win">{{winner}}</h2>
   </div> -->
+
+ <div class="container" style="height:100vh">
+     <div class="row h-100 align-items-center m-1">
+
+<div class="col-md-6 mx-auto m-1">
+
   <div class="row board">
     <div class="col">
       <div class="playerBox">
@@ -34,7 +40,7 @@
         <span v-if="isGameStart===true" v-html="question"></span>
       </div>
       <div class="text-center">
-        <p v-if="isGameStart===true">jawaban : {{answer}}</p>
+
         <p v-if="isGameStart===true">{{questionLeft}} question left</p>
         {{counter}}
       </div>
@@ -44,10 +50,29 @@
             <input type="number" v-model="answerBox" class="form-control" placeholder="Type your answer">
             <button type="submit" class="btn btn-primary">Send Answer</button>
           </div>
+
+          <p>
+
+          <div style="margin: 5px 20px 20px;">
+<div class="smallfont" style="margin-bottom: 2px;"><b>See the answer: </b>: <input value="Buka" style="margin: 0px; padding: 0px; width: 55px; font-size: 12px;" onclick="if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerText = ''; this.value = 'Tutup'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerText = ''; this.value = 'Buka'; }" type="button">
+</div>
+<div class="alt2" style="border: 1px inset ; margin: 0px; padding: 6px;">
+<div style="display: none;">
+
+ <p v-if="isGameStart===true">Jawaban : {{answer}}</p>
+
+ <br>
+</div>
+</div>
+</div>
         </form>
       </div>
     </div>
   </div>
+  </div>
+  </div>
+  </div>
+
 </template>
 
 <script>
@@ -198,4 +223,8 @@ export default {
   .textbox{
     padding: 5px;
   }
+  body {
+  background-image: "https://t4.ftcdn.net/jpg/02/71/12/01/360_F_271120192_ZDT2FCxH94akiIsOHwVULWnbNzi8Oagn.jpg"
+}
+
 </style>

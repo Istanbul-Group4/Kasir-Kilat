@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 
 //SETTING DISINI (MANUAL DULU YAA) T_T
 let userTotalQuestion = 10; //Total pertanyaan
-let interval = 5; //Penghitung Waktu
+let interval = 25; //Penghitung Waktu
 //data player
 let player = []
 let numberPlayer = 0;
