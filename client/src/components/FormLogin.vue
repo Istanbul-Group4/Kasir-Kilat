@@ -48,10 +48,10 @@ export default {
     login () {
       if (this.name === '') {
         Swal.fire(
-          `Please input your name`,
+          'Please input your name',
           '',
           'info'
-      )
+        )
       } else {
         this.$router.push('/playgame')
         const id = Math.ceil(Math.random() * 1000000)
