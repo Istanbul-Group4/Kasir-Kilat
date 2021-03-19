@@ -3,16 +3,16 @@
     <div id="card">
       <div id="card-content">
         <div id="card-title">
-          <h2>Input Your Email to SignIn</h2><br>
+          <h2>Input your name</h2><br>
           <form method="post" class="form">
-          <label for="user-email" style="padding-top:13px">
-            &nbsp;Email</label>
+          <label for="user-name" style="padding-top:13px">
+            &nbsp;Who are you?</label>
             <input
-             id="user-email"
-             v-model="userName"
+             id="user-name"
+             v-model="name"
              class="form-content"
-             type="email"
-             name="email"
+             type="text"
+             name="name"
              required />
              <div class="form-border"></div>
             <input
@@ -30,18 +30,40 @@
 
 <script>
 export default {
-  name: "FormLogin",
- data(){
-   return{
-    userName: '',
-   }
- },methods:{
-   login(){
-     localStorage.setItem('currentUser', this.userName)
-     this.$router.push({name: "Board"})
-   }
- }
-};
+  name: 'FormLogin',
+  data () {
+    return {
+      name: ''
+    }
+  },
+  sockets: {
+    updateDataPlayer (dataPlayer) {
+      console.log('ini dari client :', dataPlayer)
+      this.$store.commit('login', dataPlayer)
+    },
+    setToken (user) {
+      console.log('ini dari client :', user)
+    }
+  },
+  methods: {
+    login () {
+      if (this.name === '') {
+        alert('please insert name')
+      } else {
+        this.$router.push('/playgame')
+        const id = Math.ceil(Math.random() * 1000000)
+        const newUser = {
+          name: this.name,
+          id: this.name + id
+        }
+        localStorage.setItem('name', newUser.name)
+        localStorage.setItem('id', newUser.id)
+        this.$socket.emit('clientLogin', newUser)
+        this.name = ''
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -52,6 +74,7 @@ export default {
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
   height: 410px;
   margin: 6rem auto 8.1rem auto;
+  margin-left: 400px;
   width: 329px;
 }
 #card-content {
