@@ -167,7 +167,22 @@ io.on('connection', (socket) => {
     io.emit('updateDataPlayer', player);
   })
 
+   //ketika ada yang logout
+   socket.on('logout', (data) => {
+    const index = player.findIndex(function(element){
+      return element.id === data;
+    })
+    if (index !== -1) player.splice(index, 1);
+    io.emit('updateDataPlayer', player);
+  })
+
+  socket.on('refreshDataPlayer', (data) => {
+    io.emit('updateDataPlayer', player);
+  })
+
 });
+
+
 
 http.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

@@ -11,13 +11,11 @@ const routes = [
     name: 'Login',
     component: Login
   },
-
   {
     path: '/playgame',
     name: 'Board',
     component: Board
   }
-
 ]
 
 const router = new VueRouter({

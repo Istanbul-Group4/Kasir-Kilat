@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div id="card">
       <div id="card-content">
         <div id="card-title">
@@ -25,10 +24,10 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 export default {
   name: 'FormLogin',
   data () {
@@ -37,10 +36,10 @@ export default {
     }
   },
   sockets: {
-    updateDataPlayer (dataPlayer) {
-      console.log('ini dari client :', dataPlayer)
-      this.$store.commit('login', dataPlayer)
-    },
+    // updateDataPlayer (dataPlayer) {
+    //   console.log('ini dari client :', dataPlayer)
+    //   this.$store.commit('login', dataPlayer)
+    // },
     setToken (user) {
       console.log('ini dari client :', user)
     }
@@ -48,7 +47,11 @@ export default {
   methods: {
     login () {
       if (this.name === '') {
-        alert('please insert name')
+        Swal.fire(
+          `Please input your name`,
+          '',
+          'info'
+      )
       } else {
         this.$router.push('/playgame')
         const id = Math.ceil(Math.random() * 1000000)
@@ -74,7 +77,6 @@ export default {
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
   height: 410px;
   margin: 6rem auto 8.1rem auto;
-  margin-left: 400px;
   width: 329px;
 }
 #card-content {
