@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Board from '../components/Board.vue';
+import Login from '../components/LoginForm.vue';
 
 Vue.use(VueRouter);
 
