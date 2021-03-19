@@ -19,7 +19,6 @@ const routes = [
   },
   
 ];
-
 // router.beforeEach((to, from, next) => {
 //   // ...
 // })
