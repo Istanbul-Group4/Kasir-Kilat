@@ -5,7 +5,7 @@ import router from '../router'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
+  state: 
     isLoggedIn: localStorage.getItem('username') || false,
     card_deck: [],
     table_deck: [],
@@ -103,6 +103,18 @@ export default new Vuex.Store({
   },
 
   modules: {
+    quiz: {
+      text: 'Berapa hasil dari 45 + 5 = ...',
+      value: '50'
+    },
+    currentPoint: 0
+  },
+  mutations: {
+    pointPlus (state, n) {
+      state.currentPoint += n
+    }
+  },
+  actions: {
 
   }
 })
